@@ -2,10 +2,10 @@ var myApp = angular.module('myApp', []);
 
 myApp.controller('mainController', ['$scope', '$http', function ($scope, $http) 
     {
-    $http.get('http://data.consumerfinance.gov/api/views.json')
+    $http.get('https://data.ny.gov/api/views/d6yy-54nr/rows.json?accessType=DOWNLOAD')
         .success(function (result) 
             {
-            $scope.complaints = result;
+            $scope.lotteryRecords = result;
             console.log("Hooray!");
             })
         .error(function (data, status) 
