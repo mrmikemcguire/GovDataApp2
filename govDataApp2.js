@@ -21,12 +21,12 @@ myApp.service('numberService', function()
     this.chosenNumber = 10;  
     });
 
-myApp.service('numberOfDrawings', function() 
-    {
-    this.numberOfDrawings = 50;  
-    });
+//myApp.service('numberOfDrawings', function() 
+//    {
+//    this.numberOfDrawings = 50;  
+//    });
 
-myApp.controller('chooseNumberController', ['$scope', '$http', 'numberService', 'numberOfDrawings', function ($scope, $http, numberService, numberOfDrawings ) 
+myApp.controller('chooseNumberController', ['$scope', '$http', 'numberService', function ($scope, $http, numberService) 
     {
     $http.get('https://data.ny.gov/api/views/d6yy-54nr/rows.json?accessType=DOWNLOAD')
         .success(function (result) 
@@ -58,17 +58,17 @@ myApp.controller('chooseNumberController', ['$scope', '$http', 'numberService', 
         numberService.chosenNumber = $scope.chosenNumber; 
         }); 
         
-    $scope.numberOfDrawings = numberOfDrawingsService.numberOfDrawings;
-    $scope.$watch('numberOfDrawings', function() 
-        {
-        numberOfDrawingsService.numberOfDrawings = $scope.numberOfDrawings; 
-        }); 
-    }]);
+//    $scope.numberOfDrawings = numberOfDrawingsService.numberOfDrawings;
+//    $scope.$watch('numberOfDrawings', function() 
+//        {
+//        numberOfDrawingsService.numberOfDrawings = $scope.numberOfDrawings; 
+//        }); 
+//    }]);
 
-myApp.controller('frequencyController', ['$scope', 'numberService', 'numberOfDrawings', function($scope, numberService, numberOfDrawings) 
+myApp.controller('frequencyController', ['$scope', 'numberService', function($scope, numberService) 
     {
     $scope.chosenNumber = numberService.chosenNumber;
-    $scope.numberOfDrawings = numberOfDrawingsService.numberOfDrawings;
+//    $scope.numberOfDrawings = numberOfDrawingsService.numberOfDrawings;
     }]);
 
 
