@@ -16,7 +16,7 @@ myApp.config(function ($routeProvider)
         }) 
     });
 
-myApp.service('numberService', function() 
+myApp.service('chosenNumberService', function() 
     {
     this.chosenNumber = 10;  
     });
@@ -26,16 +26,21 @@ myApp.service('numberOfDrawingsService', function()
     this.numberOfDrawings = 50;  
     });
 
-myApp.controller('chooseNumberController', ['$scope', '$http', 'numberService', 'numberOfDrawingsService', function ($scope, $http, numberService, numberOfDrawingsService) 
+myApp.service('numbersArrayService', function() 
     {
+
+    });
+
+myApp.controller('chooseNumberController', ['$scope', '$http', 'chosenNumberService', 'numberOfDrawingsService', 'numbersArrayService', function ($scope, $http, chosenNumberService, numberOfDrawingsService, numbersArrayService) 
+    {
+    $scope.numbers = [];
     $http.get('https://data.ny.gov/api/views/d6yy-54nr/rows.json?accessType=DOWNLOAD')
         .success(function (result) 
             {
             console.log("Hooray!");
             $scope.numberOfDrawings = result.data.length;
             $scope.winningSeries = [];
-            $scope.numbers = [];
-
+            
             for(var i = 0; i < result.data.length; i++)
                 {
                 $scope.winningSeries.push(result.data[i][9]);
@@ -44,7 +49,7 @@ myApp.controller('chooseNumberController', ['$scope', '$http', 'numberService', 
                 $scope.numbers.push($scope.winningSeries[i].substring(6,8));
                 $scope.numbers.push($scope.winningSeries[i].substring(9,11));
                 $scope.numbers.push($scope.winningSeries[i].substring(12,14));
-                $scope.numbers.push($scope.winningSeries[i].substring(15,17));
+//                $scope.numbers.push($scope.winningSeries[i].substring(15,17));
                 }
             })
         .error(function (data, status) 
@@ -52,10 +57,16 @@ myApp.controller('chooseNumberController', ['$scope', '$http', 'numberService', 
             console.log("Oops...");
             });
         
-    $scope.chosenNumber = numberService.chosenNumber;
+    $scope.chosenNumber = chosenNumberService.chosenNumber;   
     $scope.$watch('chosenNumber', function() 
         {
-        numberService.chosenNumber = $scope.chosenNumber; 
+        chosenNumberService.chosenNumber = $scope.chosenNumber; 
+        }); 
+        
+//    $scope.numbers = numbersArrayService.numbers;
+    $scope.$watch('numbersArray', function() 
+        {
+        numbersArrayService.numbers = $scope.numbers; 
         }); 
         
     $scope.numberOfDrawings = numberOfDrawingsService.numberOfDrawings;
@@ -63,13 +74,52 @@ myApp.controller('chooseNumberController', ['$scope', '$http', 'numberService', 
         {
         numberOfDrawingsService.numberOfDrawings = $scope.numberOfDrawings; 
         }); 
+
     }]);
 
-myApp.controller('frequencyController', ['$scope', 'numberService', 'numberOfDrawingsService', function($scope, numberService, numberOfDrawingsService) 
+myApp.controller('frequencyController', ['$scope', 'chosenNumberService', 'numberOfDrawingsService', 'numbersArrayService', function($scope, chosenNumberService, numberOfDrawingsService, numbersArrayService) 
     {
-    $scope.chosenNumber = numberService.chosenNumber;
+    $scope.numbers = numbersArrayService.numbers;
+    $scope.chosenNumber = chosenNumberService.chosenNumber;
+    $scope.frequencyCounter = 3;
+
+//    $scope.frequencyCounter = function($scope.chosenNumber)
+//            {
+//            var count = 0;
+//            for (num in $scope.numbers)
+//                {
+//                if (num === $scope.chosenNumber)
+//                    {
+//                    count++;
+//                    }
+//                }
+//            return count;
+//            };
+    
     $scope.numberOfDrawings = numberOfDrawingsService.numberOfDrawings;
+    $scope.statisticalFrequency = Math.floor(5 * $scope.numberOfDrawings / 75);
+        
+    if ($scope.frequencyCounter > $scope.statisticalFrequency)
+        $scope.luckiness = "lucky";
+    else
+        $scope.luckiness = "unlucky";
+
+//    $scope.frequencyCounter = count($scope.chosenNumber);    
+//function count(chosenNumber) 
+//        {
+//        var count = 0;
+//        for (num in $scope.numbers)
+//            {
+//            if (num === chosenNumber)
+//                {
+//                count++;
+//                }
+//            }
+//        return count;
+//        }
     }]);
+
+
 
 
 
