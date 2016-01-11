@@ -32,7 +32,7 @@ myApp.controller('chooseNumberController', ['$scope', '$http', 'numberService', 
         .success(function (result) 
             {
             console.log("Hooray!");
-            $scope.numberOfDrawings = result.data.length;
+//            $scope.numberOfDrawings = result.data.length;
             $scope.winningSeries = [];
             $scope.numbers = [];
 
@@ -63,7 +63,7 @@ myApp.controller('chooseNumberController', ['$scope', '$http', 'numberService', 
 //        {
 //        numberOfDrawingsService.numberOfDrawings = $scope.numberOfDrawings; 
 //        }); 
-//    }]);
+    }]);
 
 myApp.controller('frequencyController', ['$scope', 'numberService', function($scope, numberService) 
     {
