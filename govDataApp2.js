@@ -21,18 +21,18 @@ myApp.service('numberService', function()
     this.chosenNumber = 10;  
     });
 
-//myApp.service('numberOfDrawings', function() 
-//    {
-//    this.numberOfDrawings = 50;  
-//    });
+myApp.service('numberOfDrawingsService', function() 
+    {
+    this.numberOfDrawings = 50;  
+    });
 
-myApp.controller('chooseNumberController', ['$scope', '$http', 'numberService', function ($scope, $http, numberService) 
+myApp.controller('chooseNumberController', ['$scope', '$http', 'numberService', 'numberOfDrawingsService', function ($scope, $http, numberService, numberOfDrawingsService) 
     {
     $http.get('https://data.ny.gov/api/views/d6yy-54nr/rows.json?accessType=DOWNLOAD')
         .success(function (result) 
             {
             console.log("Hooray!");
-//            $scope.numberOfDrawings = result.data.length;
+            $scope.numberOfDrawings = result.data.length;
             $scope.winningSeries = [];
             $scope.numbers = [];
 
@@ -58,17 +58,17 @@ myApp.controller('chooseNumberController', ['$scope', '$http', 'numberService', 
         numberService.chosenNumber = $scope.chosenNumber; 
         }); 
         
-//    $scope.numberOfDrawings = numberOfDrawingsService.numberOfDrawings;
-//    $scope.$watch('numberOfDrawings', function() 
-//        {
-//        numberOfDrawingsService.numberOfDrawings = $scope.numberOfDrawings; 
-//        }); 
+    $scope.numberOfDrawings = numberOfDrawingsService.numberOfDrawings;
+    $scope.$watch('numberOfDrawings', function() 
+        {
+        numberOfDrawingsService.numberOfDrawings = $scope.numberOfDrawings; 
+        }); 
     }]);
 
-myApp.controller('frequencyController', ['$scope', 'numberService', function($scope, numberService) 
+myApp.controller('frequencyController', ['$scope', 'numberService', 'numberOfDrawingsService', function($scope, numberService, numberOfDrawingsService) 
     {
     $scope.chosenNumber = numberService.chosenNumber;
-//    $scope.numberOfDrawings = numberOfDrawingsService.numberOfDrawings;
+    $scope.numberOfDrawings = numberOfDrawingsService.numberOfDrawings;
     }]);
 
 
