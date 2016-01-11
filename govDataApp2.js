@@ -63,7 +63,6 @@ myApp.controller('chooseNumberController', ['$scope', '$http', 'chosenNumberServ
         chosenNumberService.chosenNumber = $scope.chosenNumber; 
         }); 
         
-//    $scope.numbers = numbersArrayService.numbers;
     $scope.$watch('numbersArray', function() 
         {
         numbersArrayService.numbers = $scope.numbers; 
@@ -81,20 +80,21 @@ myApp.controller('frequencyController', ['$scope', 'chosenNumberService', 'numbe
     {
     $scope.numbers = numbersArrayService.numbers;
     $scope.chosenNumber = chosenNumberService.chosenNumber;
-    $scope.frequencyCounter = 3;
+    var chosenNumber  = $scope.chosenNumber;
+    var frequencyCounter = function(chosenNumber)
+            {
+            var count = 0;
+            for (var i = 0; i < $scope.numbers.length; i++)
+                {
+                if ($scope.numbers[i] === chosenNumber)
+                    {
+                    count++;
+                    }
+                }
+            return count;
+            };
+    $scope.frequencyCounter = frequencyCounter;
 
-//    $scope.frequencyCounter = function($scope.chosenNumber)
-//            {
-//            var count = 0;
-//            for (num in $scope.numbers)
-//                {
-//                if (num === $scope.chosenNumber)
-//                    {
-//                    count++;
-//                    }
-//                }
-//            return count;
-//            };
     
     $scope.numberOfDrawings = numberOfDrawingsService.numberOfDrawings;
     $scope.statisticalFrequency = Math.floor(5 * $scope.numberOfDrawings / 75);
@@ -104,19 +104,7 @@ myApp.controller('frequencyController', ['$scope', 'chosenNumberService', 'numbe
     else
         $scope.luckiness = "unlucky";
 
-//    $scope.frequencyCounter = count($scope.chosenNumber);    
-//function count(chosenNumber) 
-//        {
-//        var count = 0;
-//        for (num in $scope.numbers)
-//            {
-//            if (num === chosenNumber)
-//                {
-//                count++;
-//                }
-//            }
-//        return count;
-//        }
+
     }]);
 
 
