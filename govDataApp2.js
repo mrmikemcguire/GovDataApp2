@@ -80,20 +80,20 @@ myApp.controller('frequencyController', ['$scope', 'chosenNumberService', 'numbe
     {
     $scope.numbers = numbersArrayService.numbers;
     $scope.chosenNumber = chosenNumberService.chosenNumber;
-    var chosenNumber  = $scope.chosenNumber;
-    $scope.frequencyCounter = function(chosenNumber)
-            {
-            var count = 0;
-            for (var i = 0; i < $scope.numbers.length; i++)
-                {
-                if ($scope.numbers[i] === chosenNumber)
-                    {
-                    count++;
-                    }
-                }
-            return count;
-            };
-    
+        
+//    $scope.frequencyCounter = function($scope.chosenNumber)
+//        {
+//        var count = 0;
+//        for (var i = 0; i < $scope.numbers.length; i++)
+//            {
+//            if ($scope.numbers[i] === $scope.chosenNumber)
+//                {
+//                count++;
+//                }
+//            }
+//        return count;
+//        }();
+
     $scope.numberOfDrawings = numberOfDrawingsService.numberOfDrawings;
     $scope.statisticalFrequency = Math.floor(5 * $scope.numberOfDrawings / 75);
         
