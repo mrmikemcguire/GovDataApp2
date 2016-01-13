@@ -44,13 +44,16 @@ myApp.controller('chooseNumberController', ['$scope', '$http', 'chosenNumberServ
             for(var i = 0; i < result.data.length; i++)
                 {
                 $scope.winningSeries.push(result.data[i][9]);
-                $scope.numbers.push($scope.winningSeries[i].substring(0,2));
+                    $scope.numbers.push($scope.winningSeries[i].substring(0,2));
                 $scope.numbers.push($scope.winningSeries[i].substring(3,5));
                 $scope.numbers.push($scope.winningSeries[i].substring(6,8));
                 $scope.numbers.push($scope.winningSeries[i].substring(9,11));
                 $scope.numbers.push($scope.winningSeries[i].substring(12,14));
-//                $scope.numbers.push($scope.winningSeries[i].substring(15,17));
                 }
+            for(var i = 0; i < $scope.numbers.length; i++)
+                {
+                $scope.numbers[i] = parseInt($scope.numbers[i], 10);
+                }  
             })
         .error(function (data, status) 
             {
@@ -79,20 +82,19 @@ myApp.controller('chooseNumberController', ['$scope', '$http', 'chosenNumberServ
 myApp.controller('frequencyController', ['$scope', 'chosenNumberService', 'numberOfDrawingsService', 'numbersArrayService', function($scope, chosenNumberService, numberOfDrawingsService, numbersArrayService) 
     {
     $scope.numbers = numbersArrayService.numbers;
-    $scope.chosenNumber = chosenNumberService.chosenNumber;
-        
-//    $scope.frequencyCounter = function($scope.chosenNumber)
-//        {
-//        var count = 0;
-//        for (var i = 0; i < $scope.numbers.length; i++)
-//            {
-//            if ($scope.numbers[i] === $scope.chosenNumber)
-//                {
-//                count++;
-//                }
-//            }
-//        return count;
-//        }();
+    $scope.chosenNumber = chosenNumberService.chosenNumber; 
+    $scope.frequencyCounter = function()
+        {
+        var count = 0;
+        for (var i = 0; i < $scope.numbers.length; i++)
+            {
+            if ($scope.numbers[i] == $scope.chosenNumber)
+                {
+                count++;
+                }
+            }
+        return count;
+        }();
 
     $scope.numberOfDrawings = numberOfDrawingsService.numberOfDrawings;
     $scope.statisticalFrequency = Math.floor(5 * $scope.numberOfDrawings / 75);
@@ -102,8 +104,8 @@ myApp.controller('frequencyController', ['$scope', 'chosenNumberService', 'numbe
     else
         $scope.luckiness = "unlucky";
 
-
     }]);
+
 
 
 
